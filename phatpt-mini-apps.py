@@ -7,7 +7,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# 2. CSS Tùy chỉnh (Giao diện bóng bẩy & Nút bấm mở cùng Tab)
+# 2. CSS Tùy chỉnh
 st.markdown("""
 <style>
     .portal-card {
@@ -59,11 +59,11 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 3. Header và Tác giả
-st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Tiện Ích")
+st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Quản Trị")
 st.markdown("**Author:** Phát Phan - Network Engineer TAH")
 st.divider()
 
-# 4. KHO DỮ LIỆU CÁC ỨNG DỤNG
+# 4. KHO DỮ LIỆU CÁC ỨNG DỤNG (Chỉ chứa đúng 6 app của bạn)
 PORTAL_DATA = {
     "📚 Ngoại Ngữ - Đại học Mở Hà Nội (EHOU)": [
         {
@@ -80,11 +80,6 @@ PORTAL_DATA = {
             "title": "Reading EHOU", 
             "url": "https://reading-ehou.streamlit.app/", 
             "desc": "Thực hành bài tập đọc hiểu sát với chương trình học."
-        },
-        {
-            "title": "English Phonetics", 
-            "url": "#", 
-            "desc": "Công cụ phân tích phiên âm IPA và luyện trọng âm."
         }
     ],
     "🇨🇳 Tiếng Trung": [
@@ -101,26 +96,9 @@ PORTAL_DATA = {
     ],
     "💻 Công Nghệ Thông Tin - Đại Học CNTT (UIT)": [
         {
-            "title": "CS & Networking Fundamentals", 
-            "url": "#", 
-            "desc": "Tài liệu ôn tập kiến thức nền tảng Khoa học Máy tính và Mạng máy tính."
-        },
-        {
-            "title": "CCNA / Routing & Switching", 
-            "url": "#", 
-            "desc": "Lab thực hành cấu hình kiến trúc L2/L3, mô phỏng mạng doanh nghiệp."
-        }
-    ],
-    "🛠️ Công cụ & Tiện ích": [
-        {
             "title": "Dinh dưỡng Crawler", 
             "url": "https://dinhduong-crawler.streamlit.app/", 
             "desc": "Thu thập, phân tích và thống kê dữ liệu dinh dưỡng tự động."
-        },
-        {
-            "title": "Aquarium Bio-Tracker", 
-            "url": "#", 
-            "desc": "Công cụ theo dõi hệ vi sinh và thông số nước cho bể thủy sinh."
         }
     ]
 }
@@ -136,12 +114,12 @@ for category, apps in PORTAL_DATA.items():
         col = cols[index % 3]
         
         with col:
-            # target="_self" mở liên kết ngay tại tab hiện tại
+            # FIX LỖI LINK: Dùng target="_top" để thoát khỏi iframe của Streamlit Cloud và tải trực tiếp trên tab hiện tại
             card_html = f"""
             <div class="portal-card">
                 <div class="portal-title">{app['title']}</div>
                 <div class="portal-desc">{app['desc']}</div>
-                <a href="{app['url']}" target="_self" class="portal-btn">Truy cập ứng dụng 🚀</a>
+                <a href="{app['url']}" target="_top" class="portal-btn">Truy cập ứng dụng 🚀</a>
             </div>
             """
             st.markdown(card_html, unsafe_allow_html=True)
