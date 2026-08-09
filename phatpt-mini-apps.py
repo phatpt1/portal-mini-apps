@@ -76,6 +76,11 @@ PORTAL_DATA = {
             "url": "https://lythuyet-reading.streamlit.app/", 
             "desc": "Hệ thống lý thuyết đọc hiểu và phân tích ngữ pháp."
         },
+         {
+            "title": "Tin Học EHOU", 
+            "url": "https://ehou-tinhoc.streamlit.app/", 
+            "desc": "Hệ thống ôn luyện trắc nghiệm môn Tin Học."
+        },
         {
             "title": "Reading EHOU", 
             "url": "https://reading-ehou.streamlit.app/", 
