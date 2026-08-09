@@ -60,7 +60,6 @@ st.markdown("""
 
 # 3. Header và Tác giả
 st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Chia Sẻ Kiến Thức")
-st.title("🤔💭 Life is about creating and living experiences that are worth sharing.")
 st.markdown("**Author:** Phát Phan - Network Engineer TAH")
 st.divider()
 
