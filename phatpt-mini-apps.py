@@ -72,7 +72,7 @@ PORTAL_DATA = {
             "desc": "Luyện kỹ năng nghe tiếng Anh qua các bài tập chuyên sâu."
         },
         {
-            "title": "Lý thuyết Reading", 
+            "title": "Lý thuyết Reading EHOU", 
             "url": "https://lythuyet-reading.streamlit.app/", 
             "desc": "Hệ thống lý thuyết đọc hiểu và phân tích ngữ pháp."
         },
@@ -89,19 +89,19 @@ PORTAL_DATA = {
     ],
     "🇨🇳 Tiếng Trung": [
         {
-            "title": "Chinese Learning", 
+            "title": "Chinese Learning EHOU", 
             "url": "https://chinese-learning-phatpt.streamlit.app/", 
             "desc": "Hệ thống học từ vựng và ngữ pháp tiếng Trung cơ bản."
         },
         {
-            "title": "Chinese Writing", 
+            "title": "Chinese Writing EHOU", 
             "url": "https://chinese-learning-writing.streamlit.app/", 
             "desc": "Luyện viết, nhận diện chữ Hán và thứ tự nét bút."
         }
     ],
     "💻 Công Nghệ Thông Tin - Đại Học CNTT (UIT)": [
         {
-            "title": "Dinh dưỡng Crawler", 
+            "title": "Dinh dưỡng Crawler UIT - AI Thinking", 
             "url": "https://dinhduong-crawler.streamlit.app/", 
             "desc": "Thu thập, phân tích và thống kê dữ liệu dinh dưỡng tự động."
         }
