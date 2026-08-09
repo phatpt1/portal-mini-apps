@@ -59,11 +59,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 3. Header và Tác giả
-st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Quản Trị")
+st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Chia Sẻ Kiến Thức")
+st.title(":thinking_face: Life is about creating and living experiences that are worth sharing.")
 st.markdown("**Author:** Phát Phan - Network Engineer TAH")
 st.divider()
 
-# 4. KHO DỮ LIỆU CÁC ỨNG DỤNG (Chỉ chứa 6 app của bạn)
+# 4. KHO DỮ LIỆU CÁC ỨNG DỤNG (Chỉ chứa 7 app của bạn)
 PORTAL_DATA = {
     "📚 Ngoại Ngữ - Đại học Mở Hà Nội (EHOU)": [
         {
