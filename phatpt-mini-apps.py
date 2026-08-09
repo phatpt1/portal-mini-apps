@@ -59,29 +59,12 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 # 3. Header và Tác giả
-st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Quản Trị")
-st.markdown("**Author:** Phan Tấn Phát (dat t)")
+st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Tiện Ích")
+st.markdown("**Author:** Phát Phan - Network Engineer TAH")
 st.divider()
 
 # 4. KHO DỮ LIỆU CÁC ỨNG DỤNG
 PORTAL_DATA = {
-    "🏥 Hệ Thống Mạng - Bệnh viện Đa khoa Tâm Anh": [
-        {
-            "title": "Network Monitoring (Zabbix)", 
-            "url": "#", 
-            "desc": "Theo dõi hạ tầng mạng, Core Switch Cisco và UniFi tại các cơ sở Quận 8, Tân Bình và Quận 7."
-        },
-        {
-            "title": "Dự án Phú Mỹ Hưng (Active)", 
-            "url": "#", 
-            "desc": "Quản lý tiến độ triển khai hạ tầng mạng cho cơ sở Tâm Anh Phú Mỹ Hưng (đang trong quá trình xây dựng)."
-        },
-        {
-            "title": "Syslog & Troubleshooting", 
-            "url": "#", 
-            "desc": "Phân tích log sự cố, xử lý loop mạng và MAC flapping trên toàn hệ thống."
-        }
-    ],
     "📚 Ngoại Ngữ - Đại học Mở Hà Nội (EHOU)": [
         {
             "title": "Listening EHOU", 
@@ -104,18 +87,6 @@ PORTAL_DATA = {
             "desc": "Công cụ phân tích phiên âm IPA và luyện trọng âm."
         }
     ],
-    "💻 Công Nghệ Thông Tin - Đại Học CNTT (UIT)": [
-        {
-            "title": "CS & Networking Fundamentals", 
-            "url": "#", 
-            "desc": "Tài liệu ôn tập kiến thức nền tảng Khoa học Máy tính và Mạng máy tính."
-        },
-        {
-            "title": "CCNA / Routing & Switching", 
-            "url": "#", 
-            "desc": "Lab thực hành cấu hình kiến trúc L2/L3, mô phỏng mạng doanh nghiệp."
-        }
-    ],
     "🇨🇳 Tiếng Trung": [
         {
             "title": "Chinese Learning", 
@@ -128,6 +99,18 @@ PORTAL_DATA = {
             "desc": "Luyện viết, nhận diện chữ Hán và thứ tự nét bút."
         }
     ],
+    "💻 Công Nghệ Thông Tin - Đại Học CNTT (UIT)": [
+        {
+            "title": "CS & Networking Fundamentals", 
+            "url": "#", 
+            "desc": "Tài liệu ôn tập kiến thức nền tảng Khoa học Máy tính và Mạng máy tính."
+        },
+        {
+            "title": "CCNA / Routing & Switching", 
+            "url": "#", 
+            "desc": "Lab thực hành cấu hình kiến trúc L2/L3, mô phỏng mạng doanh nghiệp."
+        }
+    ],
     "🛠️ Công cụ & Tiện ích": [
         {
             "title": "Dinh dưỡng Crawler", 
@@ -137,7 +120,7 @@ PORTAL_DATA = {
         {
             "title": "Aquarium Bio-Tracker", 
             "url": "#", 
-            "desc": "Công cụ theo dõi hệ vi sinh và thông số nước cho bể thủy sinh (cá Corydoras, tép)."
+            "desc": "Công cụ theo dõi hệ vi sinh và thông số nước cho bể thủy sinh."
         }
     ]
 }
@@ -153,7 +136,7 @@ for category, apps in PORTAL_DATA.items():
         col = cols[index % 3]
         
         with col:
-            # SỬA Ở ĐÂY: target="_self" sẽ mở liên kết ngay tại tab hiện tại
+            # target="_self" mở liên kết ngay tại tab hiện tại
             card_html = f"""
             <div class="portal-card">
                 <div class="portal-title">{app['title']}</div>
