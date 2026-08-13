@@ -92,7 +92,7 @@ PORTAL_DATA = {
             "desc": "Lý thuyết về môn Dẫn Luận Ngôn Ngữ Học."
         }
     ],
-    "🇨🇳 Tiếng Trung": [
+    "🇨🇳 Tiếng Trung EHOU": [
         {
             "title": "Chinese Learning EHOU", 
             "url": "https://chinese-learning-phatpt.streamlit.app/", 
