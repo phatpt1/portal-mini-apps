@@ -63,7 +63,7 @@ st.title("🌟 Hệ Thống Ứng Dụng Học Tập & Chia Sẻ Kiến Thức")
 st.markdown("**Author:** Phát Phan - Network Engineer TAH")
 st.divider()
 
-# 4. KHO DỮ LIỆU CÁC ỨNG DỤNG (Chỉ chứa 7 app của bạn)
+# 4. KHO DỮ LIỆU CÁC ỨNG DỤNG (Chứa app của bạn)
 PORTAL_DATA = {
     "📚 Ngôn Ngữ Anh - Đại học Mở Hà Nội (EHOU)": [
         {
@@ -85,6 +85,11 @@ PORTAL_DATA = {
             "title": "Reading EHOU", 
             "url": "https://reading-ehou.streamlit.app/", 
             "desc": "Thực hành bài tập đọc hiểu sát với chương trình học."
+        },
+        {
+            "title": "Writing EHOU", 
+            "url": "https://writing-ehou.streamlit.app/", 
+            "desc": "Lý thuyết và Thực hành môn Viết có trợ lý AI."
         },
         {
             "title": "Dẫn Luận Ngôn Ngữ Học EHOU", 
