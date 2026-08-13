@@ -65,7 +65,7 @@ st.divider()
 
 # 4. KHO DỮ LIỆU CÁC ỨNG DỤNG (Chỉ chứa 7 app của bạn)
 PORTAL_DATA = {
-    "📚 Ngoại Ngữ - Đại học Mở Hà Nội (EHOU)": [
+    "📚 Ngôn Ngữ Anh - Đại học Mở Hà Nội (EHOU)": [
         {
             "title": "Listening EHOU", 
             "url": "https://listening-ehou.streamlit.app/", 
