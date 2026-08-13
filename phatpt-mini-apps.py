@@ -85,6 +85,11 @@ PORTAL_DATA = {
             "title": "Reading EHOU", 
             "url": "https://reading-ehou.streamlit.app/", 
             "desc": "Thực hành bài tập đọc hiểu sát với chương trình học."
+        },
+        {
+            "title": "Dẫn Luận Ngôn Ngữ Học EHOU", 
+            "url": "https://danluan-ehou.streamlit.app/", 
+            "desc": "Lý thuyết về môn Dẫn Luận Ngôn Ngữ Học."
         }
     ],
     "🇨🇳 Tiếng Trung": [
