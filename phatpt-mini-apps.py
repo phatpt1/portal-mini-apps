@@ -107,6 +107,11 @@ PORTAL_DATA = {
             "title": "Chinese Writing EHOU", 
             "url": "https://chinese-learning-writing.streamlit.app/", 
             "desc": "Luyện viết, nhận diện chữ Hán và thứ tự nét bút."
+        },
+         {
+            "title": "Ôn Tập HSK 1", 
+            "url": "https://learn-hsk1.streamlit.app/", 
+            "desc": "Luyện viết, nghe 500 từ vựng HSK 1."
         }
     ],
     "💻 Công Nghệ Thông Tin - Đại Học CNTT (UIT)": [
