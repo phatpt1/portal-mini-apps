@@ -47,35 +47,65 @@ def create_audio_button(text, button_text="🔊 Phát âm từ này"):
     except Exception as e:
         st.error("Không thể tải âm thanh.")
 
-# Các hàm vẽ nền giấy cho Canvas (Chế độ tự do)
+# --- CÁC HÀM VẼ GIẤY LUYỆN CHỮ ---
+def draw_base_rect(draw, size, color='#d32f2f', width=6):
+    draw.rectangle([0, 0, size-1, size-1], outline=color, width=width)
+
+# 1. Điền tự cách (田字格)
 def create_tianzige_bg(size=350):
     img = Image.new('RGB', (size, size), color='#ffffff')
     draw = ImageDraw.Draw(img)
-    line_color = '#e0e0e0'
-    line_width = 3
     mid = size // 2
-    draw.line([(0, mid), (size, mid)], fill=line_color, width=line_width)
-    draw.line([(mid, 0), (mid, size)], fill=line_color, width=line_width)
-    draw.rectangle([0, 0, size-1, size-1], outline='#d32f2f', width=6)
+    draw.line([(0, mid), (size, mid)], fill='#e0e0e0', width=3)
+    draw.line([(mid, 0), (mid, size)], fill='#e0e0e0', width=3)
+    draw_base_rect(draw, size)
     return img
 
+# 2. Mễ tự cách (米字格)
 def create_mizige_bg(size=350):
     img = Image.new('RGB', (size, size), color='#ffffff')
     draw = ImageDraw.Draw(img)
-    line_color = '#e0e0e0'
-    line_width = 3
     mid = size // 2
-    draw.line([(0, mid), (size, mid)], fill=line_color, width=line_width)
-    draw.line([(mid, 0), (mid, size)], fill=line_color, width=line_width)
-    draw.line([(0, 0), (size, size)], fill=line_color, width=line_width)
-    draw.line([(0, size), (size, 0)], fill=line_color, width=line_width)
-    draw.rectangle([0, 0, size-1, size-1], outline='#d32f2f', width=6)
+    draw.line([(0, mid), (size, mid)], fill='#e0e0e0', width=3)
+    draw.line([(mid, 0), (mid, size)], fill='#e0e0e0', width=3)
+    draw.line([(0, 0), (size, size)], fill='#e0e0e0', width=3)
+    draw.line([(0, size), (size, 0)], fill='#e0e0e0', width=3)
+    draw_base_rect(draw, size)
     return img
 
-def create_blank_bg(size=350):
+# 3. Cửu cung cách (九宫格)
+def create_jiugongge_bg(size=350):
     img = Image.new('RGB', (size, size), color='#ffffff')
     draw = ImageDraw.Draw(img)
-    draw.rectangle([0, 0, size-1, size-1], outline='#d32f2f', width=6)
+    step = size // 3
+    draw.line([(0, step), (size, step)], fill='#e0e0e0', width=3)
+    draw.line([(0, step*2), (size, step*2)], fill='#e0e0e0', width=3)
+    draw.line([(step, 0), (step, size)], fill='#e0e0e0', width=3)
+    draw.line([(step*2, 0), (step*2, size)], fill='#e0e0e0', width=3)
+    draw_base_rect(draw, size)
+    return img
+
+# 4. Hồi tự cách (回字格)
+def create_huizige_bg(size=350):
+    img = Image.new('RGB', (size, size), color='#ffffff')
+    draw = ImageDraw.Draw(img)
+    margin = size // 5
+    draw.line([(0, size//2), (size, size//2)], fill='#e0e0e0', width=2)
+    draw.line([(size//2, 0), (size//2, size)], fill='#e0e0e0', width=2)
+    draw.rectangle([margin, margin, size-margin, size-margin], outline='#e0e0e0', width=3)
+    draw_base_rect(draw, size)
+    return img
+
+# 5. Phương cách (方格)
+def create_fangge_bg(size=350):
+    img = Image.new('RGB', (size, size), color='#ffffff')
+    draw = ImageDraw.Draw(img)
+    draw_base_rect(draw, size)
+    return img
+
+# 6. Giấy trắng tự do
+def create_blank_bg(size=350):
+    img = Image.new('RGB', (size, size), color='#ffffff')
     return img
 
 # ================= GIAO DIỆN CHÍNH =================
@@ -160,17 +190,20 @@ elif menu == "Luyện viết":
                 else:
                     char_to_draw = word_to_draw[0]
                 
-                paper_type_quiz = st.selectbox("📝 Chọn loại giấy:", ["Điền tự cách (田)", "Mễ tự cách (米)", "Giấy trắng (Trống)"], key="quiz_paper")
+                paper_type_quiz = st.selectbox("📝 Chọn loại giấy:", ["Điền tự cách (田)", "Mễ tự cách (米)", "Phương cách (方)", "Giấy trắng"], key="quiz_paper")
                 
-                # Render CSS tùy theo loại giấy được chọn
+                # Render CSS tùy loại giấy
                 if paper_type_quiz == "Điền tự cách (田)":
                     bg_css = "linear-gradient(to bottom, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%), linear-gradient(to right, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%)"
                 elif paper_type_quiz == "Mễ tự cách (米)":
                     bg_css = "linear-gradient(to bottom, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%), linear-gradient(to right, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%), linear-gradient(45deg, transparent 49.5%, #e0e0e0 49.5%, #e0e0e0 50.5%, transparent 50.5%), linear-gradient(-45deg, transparent 49.5%, #e0e0e0 49.5%, #e0e0e0 50.5%, transparent 50.5%)"
+                elif paper_type_quiz == "Phương cách (方)":
+                    bg_css = "none"
                 else:
                     bg_css = "none"
 
             with col_writer:
+                border_css = "4px solid #d32f2f" if paper_type_quiz != "Giấy trắng" else "none"
                 html_code = f"""
                 <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
                 <style>
@@ -179,7 +212,7 @@ elif menu == "Luyện viết":
                         width: 300px; height: 300px; 
                         background-color: #ffffff;
                         background-image: {bg_css};
-                        border: 4px solid #d32f2f; border-radius: 8px; margin-bottom: 15px;
+                        border: {border_css}; border-radius: 8px; margin-bottom: 15px;
                     }}
                     button {{ margin: 5px; padding: 10px 15px; font-size: 15px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }}
                     #quiz-btn {{ background-color: #168F16; color: white; border: none; }}
@@ -214,17 +247,24 @@ elif menu == "Luyện viết":
         elif write_mode == "🖌️ Viết tự do (Bút thư pháp)":
             col_settings, col_canvas = st.columns([1, 2])
             with col_settings:
-                paper_type_free = st.selectbox("📝 Chọn loại giấy:", ["Điền tự cách (田)", "Mễ tự cách (米)", "Giấy trắng (Trống)"], key="free_paper")
+                paper_type_free = st.selectbox("📝 Chọn loại giấy:", [
+                    "Điền tự cách (田)", 
+                    "Mễ tự cách (米)", 
+                    "Cửu cung cách (九宫)", 
+                    "Hồi tự cách (回)", 
+                    "Phương cách (方)", 
+                    "Giấy trắng"
+                ], key="free_paper")
                 stroke_width = st.slider("🖌️ Độ dày nét bút", min_value=1, max_value=30, value=8, step=1)
                 stroke_color = st.color_picker("🎨 Màu mực", "#333333")
             
             with col_canvas:
-                if paper_type_free == "Điền tự cách (田)":
-                    bg_image = create_tianzige_bg(350)
-                elif paper_type_free == "Mễ tự cách (米)":
-                    bg_image = create_mizige_bg(350)
-                else:
-                    bg_image = create_blank_bg(350)
+                if paper_type_free == "Điền tự cách (田)": bg_image = create_tianzige_bg(350)
+                elif paper_type_free == "Mễ tự cách (米)": bg_image = create_mizige_bg(350)
+                elif paper_type_free == "Cửu cung cách (九宫)": bg_image = create_jiugongge_bg(350)
+                elif paper_type_free == "Hồi tự cách (回)": bg_image = create_huizige_bg(350)
+                elif paper_type_free == "Phương cách (方)": bg_image = create_fangge_bg(350)
+                else: bg_image = create_blank_bg(350)
                     
                 st_canvas(
                     fill_color="rgba(255, 165, 0, 0.3)",
