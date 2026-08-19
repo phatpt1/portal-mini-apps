@@ -47,17 +47,34 @@ def create_audio_button(text, button_text="🔊 Phát âm từ này"):
     except Exception as e:
         st.error("Không thể tải âm thanh.")
 
-# Hàm vẽ nền giấy Điền tự cách (田字格) cho Canvas
+# Các hàm vẽ nền giấy cho Canvas (Chế độ tự do)
 def create_tianzige_bg(size=350):
     img = Image.new('RGB', (size, size), color='#ffffff')
     draw = ImageDraw.Draw(img)
     line_color = '#e0e0e0'
     line_width = 3
     mid = size // 2
-    # Vẽ đường chữ thập (ngang và dọc)
     draw.line([(0, mid), (size, mid)], fill=line_color, width=line_width)
     draw.line([(mid, 0), (mid, size)], fill=line_color, width=line_width)
-    # Vẽ viền ngoài
+    draw.rectangle([0, 0, size-1, size-1], outline='#d32f2f', width=6)
+    return img
+
+def create_mizige_bg(size=350):
+    img = Image.new('RGB', (size, size), color='#ffffff')
+    draw = ImageDraw.Draw(img)
+    line_color = '#e0e0e0'
+    line_width = 3
+    mid = size // 2
+    draw.line([(0, mid), (size, mid)], fill=line_color, width=line_width)
+    draw.line([(mid, 0), (mid, size)], fill=line_color, width=line_width)
+    draw.line([(0, 0), (size, size)], fill=line_color, width=line_width)
+    draw.line([(0, size), (size, 0)], fill=line_color, width=line_width)
+    draw.rectangle([0, 0, size-1, size-1], outline='#d32f2f', width=6)
+    return img
+
+def create_blank_bg(size=350):
+    img = Image.new('RGB', (size, size), color='#ffffff')
+    draw = ImageDraw.Draw(img)
     draw.rectangle([0, 0, size-1, size-1], outline='#d32f2f', width=6)
     return img
 
@@ -135,62 +152,80 @@ elif menu == "Luyện viết":
         write_mode = st.radio("Chọn chế độ luyện viết:", ["✍️ Viết theo mẫu (Chấm điểm nét)", "🖌️ Viết tự do (Bút thư pháp)"], horizontal=True)
         
         if write_mode == "✍️ Viết theo mẫu (Chấm điểm nét)":
-            char_to_draw = word_to_draw[0]
-            if len(word_to_draw) > 1:
-                char_to_draw = st.radio("Chọn từng Hán tự để tập viết:", list(word_to_draw), horizontal=True, key="hanzi_radio")
+            col_settings, col_writer = st.columns([1, 2])
+            
+            with col_settings:
+                if len(word_to_draw) > 1:
+                    char_to_draw = st.radio("Chọn Hán tự:", list(word_to_draw), horizontal=True)
+                else:
+                    char_to_draw = word_to_draw[0]
+                
+                paper_type_quiz = st.selectbox("📝 Chọn loại giấy:", ["Điền tự cách (田)", "Mễ tự cách (米)", "Giấy trắng (Trống)"], key="quiz_paper")
+                
+                # Render CSS tùy theo loại giấy được chọn
+                if paper_type_quiz == "Điền tự cách (田)":
+                    bg_css = "linear-gradient(to bottom, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%), linear-gradient(to right, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%)"
+                elif paper_type_quiz == "Mễ tự cách (米)":
+                    bg_css = "linear-gradient(to bottom, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%), linear-gradient(to right, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%), linear-gradient(45deg, transparent 49.5%, #e0e0e0 49.5%, #e0e0e0 50.5%, transparent 50.5%), linear-gradient(-45deg, transparent 49.5%, #e0e0e0 49.5%, #e0e0e0 50.5%, transparent 50.5%)"
+                else:
+                    bg_css = "none"
 
-            # Xóa các đường chéo, chỉ để lại chữ thập (Điền tự cách)
-            html_code = f"""
-            <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
-            <style>
-                .hanzi-container {{ display: flex; flex-direction: column; align-items: center; font-family: sans-serif; }}
-                #grid-background {{
-                    width: 300px; height: 300px; 
-                    background-color: #ffffff;
-                    background-image: 
-                        linear-gradient(to bottom, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%),
-                        linear-gradient(to right, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%);
-                    border: 4px solid #d32f2f; border-radius: 8px; margin-bottom: 15px;
-                }}
-                button {{ margin: 5px; padding: 10px 15px; font-size: 15px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }}
-                #quiz-btn {{ background-color: #168F16; color: white; border: none; }}
-            </style>
-            <div class="hanzi-container">
-                <div id="grid-background"></div>
-                <div>
-                    <button id="animate-btn">▶ Xem thứ tự nét</button>
-                    <button id="quiz-btn">✍️ Tự luyện (Chế độ Quiz)</button>
+            with col_writer:
+                html_code = f"""
+                <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
+                <style>
+                    .hanzi-container {{ display: flex; flex-direction: column; align-items: center; font-family: sans-serif; }}
+                    #grid-background {{
+                        width: 300px; height: 300px; 
+                        background-color: #ffffff;
+                        background-image: {bg_css};
+                        border: 4px solid #d32f2f; border-radius: 8px; margin-bottom: 15px;
+                    }}
+                    button {{ margin: 5px; padding: 10px 15px; font-size: 15px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }}
+                    #quiz-btn {{ background-color: #168F16; color: white; border: none; }}
+                </style>
+                <div class="hanzi-container">
+                    <div id="grid-background"></div>
+                    <div>
+                        <button id="animate-btn">▶ Xem thứ tự nét</button>
+                        <button id="quiz-btn">✍️ Tự luyện (Chế độ Quiz)</button>
+                    </div>
+                    <h4 id="feedback" style="color: #d32f2f; margin-top: 10px; height: 20px;"></h4>
                 </div>
-                <h4 id="feedback" style="color: #d32f2f; margin-top: 10px; height: 20px;"></h4>
-            </div>
-            <script>
-                var writer = HanziWriter.create('grid-background', '{char_to_draw}', {{
-                    width: 300, height: 300, padding: 15, showOutline: true, 
-                    strokeAnimationSpeed: 1, delayBetweenStrokes: 100, radicalsColor: '#168F16'
-                }});
-                document.getElementById('animate-btn').addEventListener('click', function() {{ writer.animateCharacter(); }});
-                document.getElementById('quiz-btn').addEventListener('click', function() {{
-                    document.getElementById('feedback').innerText = "Bắt đầu vẽ! Nếu vẽ sai thứ tự nét, hệ thống sẽ báo.";
-                    document.getElementById('feedback').style.color = "#333";
-                    writer.quiz({{
-                        onMistake: function() {{ document.getElementById('feedback').innerText = "Sai nét hoặc sai chiều!"; document.getElementById('feedback').style.color = "red"; }},
-                        onCorrectStroke: function(strokeData) {{ document.getElementById('feedback').innerText = "Nét " + strokeData.strokeNum + " chính xác!"; document.getElementById('feedback').style.color = "blue"; }},
-                        onComplete: function() {{ document.getElementById('feedback').innerText = "🎉 Chúc mừng! Bạn đã viết đúng."; document.getElementById('feedback').style.color = "green"; }}
+                <script>
+                    var writer = HanziWriter.create('grid-background', '{char_to_draw}', {{
+                        width: 300, height: 300, padding: 15, showOutline: true, 
+                        strokeAnimationSpeed: 1, delayBetweenStrokes: 100, radicalsColor: '#168F16'
                     }});
-                }});
-            </script>
-            """
-            components.html(html_code, height=450)
+                    document.getElementById('animate-btn').addEventListener('click', function() {{ writer.animateCharacter(); }});
+                    document.getElementById('quiz-btn').addEventListener('click', function() {{
+                        document.getElementById('feedback').innerText = "Bắt đầu vẽ! Nếu vẽ sai thứ tự nét, hệ thống sẽ báo.";
+                        document.getElementById('feedback').style.color = "#333";
+                        writer.quiz({{
+                            onMistake: function() {{ document.getElementById('feedback').innerText = "Sai nét hoặc sai chiều!"; document.getElementById('feedback').style.color = "red"; }},
+                            onCorrectStroke: function(strokeData) {{ document.getElementById('feedback').innerText = "Nét " + strokeData.strokeNum + " chính xác!"; document.getElementById('feedback').style.color = "blue"; }},
+                            onComplete: function() {{ document.getElementById('feedback').innerText = "🎉 Chúc mừng! Bạn đã viết đúng."; document.getElementById('feedback').style.color = "green"; }}
+                        }});
+                    }});
+                </script>
+                """
+                components.html(html_code, height=450)
 
         elif write_mode == "🖌️ Viết tự do (Bút thư pháp)":
             col_settings, col_canvas = st.columns([1, 2])
             with col_settings:
+                paper_type_free = st.selectbox("📝 Chọn loại giấy:", ["Điền tự cách (田)", "Mễ tự cách (米)", "Giấy trắng (Trống)"], key="free_paper")
                 stroke_width = st.slider("🖌️ Độ dày nét bút", min_value=1, max_value=30, value=8, step=1)
                 stroke_color = st.color_picker("🎨 Màu mực", "#333333")
             
             with col_canvas:
-                # Gọi hàm tạo ảnh giấy Điền tự cách
-                bg_image = create_tianzige_bg(350)
+                if paper_type_free == "Điền tự cách (田)":
+                    bg_image = create_tianzige_bg(350)
+                elif paper_type_free == "Mễ tự cách (米)":
+                    bg_image = create_mizige_bg(350)
+                else:
+                    bg_image = create_blank_bg(350)
+                    
                 st_canvas(
                     fill_color="rgba(255, 165, 0, 0.3)",
                     stroke_width=stroke_width,
