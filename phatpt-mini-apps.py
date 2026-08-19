@@ -47,19 +47,17 @@ def create_audio_button(text, button_text="🔊 Phát âm từ này"):
     except Exception as e:
         st.error("Không thể tải âm thanh.")
 
-# Hàm vẽ nền giấy Mễ tự cách (米字格) cho Canvas
-def create_mizige_bg(size=350):
+# Hàm vẽ nền giấy Điền tự cách (田字格) cho Canvas
+def create_tianzige_bg(size=350):
     img = Image.new('RGB', (size, size), color='#ffffff')
     draw = ImageDraw.Draw(img)
     line_color = '#e0e0e0'
     line_width = 3
     mid = size // 2
-    # Vẽ các đường chéo và chữ thập
+    # Vẽ đường chữ thập (ngang và dọc)
     draw.line([(0, mid), (size, mid)], fill=line_color, width=line_width)
     draw.line([(mid, 0), (mid, size)], fill=line_color, width=line_width)
-    draw.line([(0, 0), (size, size)], fill=line_color, width=line_width)
-    draw.line([(0, size), (size, 0)], fill=line_color, width=line_width)
-    # Vẽ viền đỏ
+    # Vẽ viền ngoài
     draw.rectangle([0, 0, size-1, size-1], outline='#d32f2f', width=6)
     return img
 
@@ -141,6 +139,7 @@ elif menu == "Luyện viết":
             if len(word_to_draw) > 1:
                 char_to_draw = st.radio("Chọn từng Hán tự để tập viết:", list(word_to_draw), horizontal=True, key="hanzi_radio")
 
+            # Xóa các đường chéo, chỉ để lại chữ thập (Điền tự cách)
             html_code = f"""
             <script src="https://cdn.jsdelivr.net/npm/hanzi-writer@3.5/dist/hanzi-writer.min.js"></script>
             <style>
@@ -150,9 +149,7 @@ elif menu == "Luyện viết":
                     background-color: #ffffff;
                     background-image: 
                         linear-gradient(to bottom, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%),
-                        linear-gradient(to right, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%),
-                        linear-gradient(45deg, transparent 49.5%, #e0e0e0 49.5%, #e0e0e0 50.5%, transparent 50.5%),
-                        linear-gradient(-45deg, transparent 49.5%, #e0e0e0 49.5%, #e0e0e0 50.5%, transparent 50.5%);
+                        linear-gradient(to right, transparent 49%, #e0e0e0 49%, #e0e0e0 51%, transparent 51%);
                     border: 4px solid #d32f2f; border-radius: 8px; margin-bottom: 15px;
                 }}
                 button {{ margin: 5px; padding: 10px 15px; font-size: 15px; cursor: pointer; border-radius: 5px; border: 1px solid #ccc; }}
@@ -192,8 +189,8 @@ elif menu == "Luyện viết":
                 stroke_color = st.color_picker("🎨 Màu mực", "#333333")
             
             with col_canvas:
-                # Gọi hàm tạo ảnh giấy Mễ tự cách
-                bg_image = create_mizige_bg(350)
+                # Gọi hàm tạo ảnh giấy Điền tự cách
+                bg_image = create_tianzige_bg(350)
                 st_canvas(
                     fill_color="rgba(255, 165, 0, 0.3)",
                     stroke_width=stroke_width,
